@@ -25,7 +25,7 @@ train_df['text'] = train_df['text'].apply(lambda x : re.sub(r'[^ ㄱ-ㅣ가-힣]
 text = train_df['text']
 score = train_df['score']
 
-train_x, test_x, train_y, test_y = train_test_split(text, score , test_size=0.90, random_state=0)
+train_x, test_x, train_y, test_y = train_test_split(text, score , test_size=0.92, random_state=0)
 
 tfv = TfidfVectorizer(tokenizer=okt.morphs, ngram_range=(1,2), min_df=3, max_df=0.9)
 tfv.fit(train_x)
