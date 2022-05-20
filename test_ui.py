@@ -5,6 +5,7 @@ from PyQt5 import uic
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
+import pandas as pd
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
 def resource_path(relative_path):
@@ -34,28 +35,41 @@ class secondwindow(QDialog,QWidget,form_secondwindow):
         super(secondwindow,self).__init__()
         self.initUi()
         self.show()
+        data = pd.read_excel('total.xlsx', index_col=0)
+
+        # 결측치 드랍
+        data = data.dropna(axis=0)
+
+        print('data : ', len(data))
+
+        good = data[data['react'] == '긍정']
+        good_len = len(good)
+
+
+        bad = data[data['react'] == '부정']
+        bad_len = len(bad)
 
 
         self.fig = plt.Figure()
         self.canvas = FigureCanvas(self.fig)
-        self.big_graph.addWidget(self.canvas)
-        x = np.arange(0, 100, 1)
-        y = np.sin(x)
+        self.small_graph.addWidget(self.canvas)
 
         ax = self.fig.add_subplot(111)
-        ax.plot(x, y, label="sin")
-        ax.set_xlabel("x")
-        ax.set_xlabel("y")
 
-        ax.set_title("my sin graph")
-        ax.legend()
+        x = [1,2]
+        y = [good_len,bad_len]
+        label = ['positive', 'negative']
+        ax.barh(x,y,tick_label =label)
+
+        ax.set_title("positive negative ratio")
+
         self.canvas.draw()
 
     def initUi(self):
         self.setupUi(self)
 
     def return_click(self):
-        self.close()                    #클릭시 종료됨.
+        self.close()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
