@@ -61,7 +61,7 @@ test_predict = load_model.best_estimator_.predict(tfv_test_x)
 # else :
 #     print('예측 결과: ->> 긍정 감성')
 
-test_input = pd.read_excel('44.xlsx')
+test_input = pd.read_excel('craw.xlsx')
 
 test_df = test_input[test_input['Comment'].notnull()]
 test_df['Comment'] = test_df['Comment'].apply(lambda x: re.sub(r'[^ ㄱ-ㅣ 가-힣] + ', " ", x))
