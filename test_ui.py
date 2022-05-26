@@ -5,6 +5,8 @@ from PyQt5 import uic
 import pandas as pd
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
+from PyQt5.QtGui import *
+from wordCreate import wordcreate
 
 
 def resource_path(relative_path):
@@ -35,14 +37,27 @@ class secondwindow(QDialog,QWidget,form_secondwindow):
     def __init__(self, url):
         super(secondwindow,self).__init__()
         self.initUi()
-        self.setWindowTitle('Result')
         self.show()
-        self.label.setText(url)         #test용
+
+
         self.read_data()
         self.draw_canvas()
+        self.createWordcloud()
+        self.setPhoto()
+
+    def createWordcloud(self):
+         self.worldcloud = wordcreate()
+         self.worldcloud.create()
+
+    def setPhoto(self):
+        self.picture = QPixmap()
+        self.picture.load('word.png')
+        self.picture = self.picture.scaled(700, 300)
+        self.photo.setPixmap(self.picture)
 
     def initUi(self):
         self.setupUi(self)
+        self.setWindowTitle('Result')
 
     def return_click(self):
         self.close()
@@ -70,6 +85,7 @@ class secondwindow(QDialog,QWidget,form_secondwindow):
         self.good_len = len(self.good)
         self.bad = self.data[self.data['react'] == '부정']
         self.bad_len = len(self.bad)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

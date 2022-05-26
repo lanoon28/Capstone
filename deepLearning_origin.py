@@ -11,7 +11,7 @@ import joblib
 import time
 from sklearn.feature_selection import RFE
 
-start = time.time()
+#start = time.time()
 
 warnings.filterwarnings(action = 'ignore')
 
@@ -31,7 +31,7 @@ train_x, test_x, train_y, test_y = train_test_split(text, score , test_size=0.92
 tfv = TfidfVectorizer(tokenizer=okt.morphs, ngram_range=(1,2), min_df=3, max_df=0.9)
 tfv.fit(train_x)
 tfv_train_x = tfv.transform(train_x)
-clf = LogisticRegression(random_state=0)
+# clf = LogisticRegression(random_state=0)
 # params = {'C': [15, 18, 19, 20, 22]}
 # grid_cv = GridSearchCV(clf, param_grid=params, cv=3, scoring='accuracy', verbose=1)
 # grid_cv.fit(tfv_train_x, train_y)
@@ -54,7 +54,7 @@ test_predict = load_model.best_estimator_.predict(tfv_test_x)
 
 #st_predict = load_model.best_estimator_.predict(st_tfidf)
 
-# print('감성 분류 모델의 정확도 : ',round(accuracy_score(test_y, test_predict), 3))
+print('감성 분류 모델의 정확도 : ',round(accuracy_score(test_y, test_predict), 3))
 #
 # if(st_predict == 0):
 #     print('예측 결과: ->> 부정 감성')
@@ -71,15 +71,28 @@ test = tfv.transform(text_r)
 
 ts_predict = load_model.best_estimator_.predict(test)
 
-
+react_df = pd.DataFrame(columns=['idx', 'react'])
 
 for i in range(len(ts_predict)):
     if (ts_predict[i] == 0):
-        print('부정')
+        react = '부정'
     else:
-        print('긍정')
+        react = '긍정'
 
-stop = time.time()
-print(stop - start)
-print(len(ts_predict))
+    react_df = react_df.append(pd.DataFrame([[i, react]], columns=['idx', 'react']),ignore_index=True)
+
+read_df = pd.read_excel('craw.xlsx')
+# print(read_df,react_df)
+read_df = read_df.merge(react_df, how = 'left', left_on = 'no', right_on = 'idx')
+
+columns = ['ID', 'Comment', 'react']
+df = read_df[columns]
+
+df.to_excel('total.xlsx')
+
+positive = df[df['react'] == '긍정']
+negative = df[df['react'] == '부정']
+
+positive.to_excel('positive.xlsx')
+negative.to_excel('negative.xlsx')
 

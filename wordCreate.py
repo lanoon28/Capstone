@@ -9,10 +9,10 @@ class wordcreate:
     okt = Okt()
 
     def __init__(self):
-        return 0
+        pass
 
-    def create(loadfile):
-        openex = pd.read_excel(loadfile)
+    def create(self):
+        openex = pd.read_excel('total.xlsx')
         allword = openex['Comment']
 
         word = []
@@ -34,8 +34,8 @@ class wordcreate:
         wc.to_file('word.png')
 
 # 사용법
-# 생성
-st = wordcreate
-st.create('total.xlsx')
+# # 생성
+# st = wordcreate
+# st.create('total.xlsx')
 # create안에 엑셀위치 + 긍부정만 넣으면됨 긍정이면 '긍정' 부정이면 '부정'
 # 혹시 이거 워드클라우드 크기나 이런거 설정필요하면 말하셈

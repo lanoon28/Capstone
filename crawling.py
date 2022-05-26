@@ -8,7 +8,8 @@ options = webdriver.ChromeOptions()
 options.add_argument('headless')
 options.add_argument('window-size=1920x1080')
 
-url = 'https://www.youtube.com/watch?v=quaCPddGc7k'
+url = ''
+#https://www.youtube.com/watch?v=0xbefR6KEHc
 driver = webdriver.Chrome("./chromedriver")
 
 # Move to url
@@ -46,11 +47,6 @@ ids_len = len(ids_html)
 # Empty listsel
 Ids = []
 Comments = []
-
-for i in range(comments_len):
-    Ids.append(list(ids_html[i].select_one('style-scope ytd-comment-renderer').
-                   stripped_strings)[0])
-    Comments.append(list(comments_html[i].select_one('')))
 
 for i in range(ids_len):
     temp_id = ids_html[i].text
