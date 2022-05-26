@@ -58,6 +58,7 @@ class crawling:
         # Empty listsel
         self.Ids = []
         self.Comments = []
+        self.no = []
 
         for i in range(self.ids_len):
             self.temp_id = self.ids_html[i].text
@@ -71,6 +72,8 @@ class crawling:
             self.temp_comment = self.temp_comment.replace('\t', '')
             self.temp_comment = self.temp_comment.replace('    ', '')
             self.Comments.append(self.temp_comment)
+
+            self.no.append(i)
 
         self.youtube_df = pd.DataFrame([self.Ids, self.Comments,], index=['ID', 'Comment']).T
         self.youtube_df

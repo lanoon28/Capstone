@@ -81,7 +81,7 @@ for i in range(len(ts_predict)):
 
 read_df = pd.read_excel('craw.xlsx')
 # print(read_df,react_df)
-read_df = read_df.merge(react_df, how = 'left', left_on = 'no', right_on = 'idx')
+read_df = read_df.merge(react_df, how = 'left', left_on = 'Idx', right_on = 'idx')
 
 columns = ['ID', 'Comment', 'react']
 df = read_df[columns]
