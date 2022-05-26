@@ -6,17 +6,19 @@ import pandas as pd
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 from PyQt5.QtGui import *
-from wordCreate import wordcreate
+from master_wordCreate import wordcreate
+from scrap import crawling
+from master_deepLearning import deepLearning
 
 
 def resource_path(relative_path):
     base_path = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
     return os.path.join(base_path, relative_path)
 
-form = resource_path('home.ui')
+form = resource_path('master_home.ui')
 form_class = uic.loadUiType(form)[0]
 
-form_second = resource_path('result_end.ui')
+form_second = resource_path('master_result_end.ui')
 form_secondwindow = uic.loadUiType(form_second)[0]
 
 
@@ -34,20 +36,31 @@ class WindowClass(QMainWindow, form_class):
         self.show()                     # 두번째 창을 닫으면 다시 첫 번째 창이 보여짐짐
 
 class secondwindow(QDialog,QWidget,form_secondwindow):
+    global url
     def __init__(self, url):
         super(secondwindow,self).__init__()
         self.initUi()
         self.show()
+        self.url = url
+        self.craw()
 
-
+        self.deep()
         self.read_data()
         self.draw_canvas()
         self.createWordcloud()
         self.setPhoto()
 
+    def deep(self):
+        self.deepModel = deepLearning()
+        self.deepModel.learning()
+
+    def craw(self):
+        self.scrap = crawling()
+        self.scrap.crawdata(self.url)
+
     def createWordcloud(self):
-         self.worldcloud = wordcreate()
-         self.worldcloud.create()
+        self.worldcloud = wordcreate()
+        self.worldcloud.create()
 
     def setPhoto(self):
         self.picture = QPixmap()
@@ -61,6 +74,14 @@ class secondwindow(QDialog,QWidget,form_secondwindow):
 
     def return_click(self):
         self.close()
+
+    def positive_click(self):
+        self.deepModel2 = deepLearning()
+        self.deepModel2.positive()
+
+    def negative_click(self):
+        self.deepModel3 = deepLearning()
+        self.deepModel3.negative()
 
     def draw_canvas(self):
         self.fig = plt.Figure()

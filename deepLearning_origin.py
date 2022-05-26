@@ -11,8 +11,6 @@ import joblib
 import time
 from sklearn.feature_selection import RFE
 
-#start = time.time()
-
 warnings.filterwarnings(action = 'ignore')
 
 okt = Okt()
@@ -54,7 +52,7 @@ test_predict = load_model.best_estimator_.predict(tfv_test_x)
 
 #st_predict = load_model.best_estimator_.predict(st_tfidf)
 
-print('감성 분류 모델의 정확도 : ',round(accuracy_score(test_y, test_predict), 3))
+#print('감성 분류 모델의 정확도 : ',round(accuracy_score(test_y, test_predict), 3))
 #
 # if(st_predict == 0):
 #     print('예측 결과: ->> 부정 감성')
