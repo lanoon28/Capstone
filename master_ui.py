@@ -18,7 +18,7 @@ def resource_path(relative_path):
 form = resource_path('master_home.ui')
 form_class = uic.loadUiType(form)[0]
 
-form_second = resource_path('master_result_end.ui')
+form_second = resource_path('real_result_.ui')
 form_secondwindow = uic.loadUiType(form_second)[0]
 
 
@@ -43,7 +43,6 @@ class secondwindow(QDialog,QWidget,form_secondwindow):
         self.show()
         self.url = url
         self.craw()
-
         self.deep()
         self.read_data()
         self.draw_canvas()

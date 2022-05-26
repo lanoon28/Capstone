@@ -21,7 +21,9 @@ class crawling:
 
         self.options = webdriver.ChromeOptions()
         self.options.add_argument('headless')
-        self.options.add_argument('window-size=1920x1080')
+        self.options.add_argument("disable-gpu")
+        #self.options.add_argument('window-size=1080x720')
+        self.driver.set_window_size(900,600)
 
         self.driver.get(self.url)
         time.sleep(3)
@@ -75,7 +77,7 @@ class crawling:
 
             self.no.append(i)
 
-        self.youtube_df = pd.DataFrame([self.Ids, self.Comments,], index=['ID', 'Comment']).T
+        self.youtube_df = pd.DataFrame([self.no, self.Ids, self.Comments,], index=['no', 'ID', 'Comment']).T
         self.youtube_df
 
         self.youtube_df.to_excel('craw.xlsx')

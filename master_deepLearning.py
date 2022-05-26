@@ -69,11 +69,11 @@ class deepLearning:
     def positive(self):
         self.read = pd.read_excel('total.xlsx')
         self.positive = self.read[self.read['react'] == '긍정']
-        self.positive.to_excel('positive.xlsx')
+        self.positive.to_excel('긍정.xlsx')
 
     def negative(self):
         read = pd.read_excel('total.xlsx')
         negative = read[read['react'] == '부정']
-        negative.to_excel('negative.xlsx')
+        negative.to_excel('부정.xlsx')
 
 
